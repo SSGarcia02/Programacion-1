@@ -4,6 +4,7 @@ public class Estudiante {
     private String nombre;
     private String apellido;
     private int edad;
+    private int semestre;
     private double nota1;
     private double nota2;
     private double nota3;
@@ -76,6 +77,14 @@ public class Estudiante {
 
     public void setNota4(double nota4) {
         this.nota4 = nota4;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
 
     @Override

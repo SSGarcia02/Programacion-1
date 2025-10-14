@@ -12,6 +12,7 @@ public class Main {
         estudiante1.setNombre("Juan");
         estudiante1.setApellido("Perez");
         estudiante1.setEdad(20);
+        estudiante1.setSemestre(3);
         estudiante1.setNota1(3.8);
         estudiante1.setNota2(2.5);
         estudiante1.setNota3(1.5);
@@ -21,6 +22,7 @@ public class Main {
         estudiante2.setNombre("Julian");
         estudiante2.setApellido("Alavarez");
         estudiante2.setEdad(19);
+        estudiante2.setSemestre(4);
         estudiante2.setNota1(4.4);
         estudiante2.setNota2(3.5);
         estudiante2.setNota3(2.9);
@@ -30,6 +32,7 @@ public class Main {
         estudiante3.setNombre("Sebastian");
         estudiante3.setApellido("Garcia");
         estudiante3.setEdad(24);
+        estudiante3.setSemestre(5);
         estudiante3.setNota1(5.0);
         estudiante3.setNota2(4.4);
         estudiante3.setNota3(4.8);
@@ -52,6 +55,8 @@ public class Main {
         aprobacionEstudianteCurso(docente1, estudiante1);
         obtenerNumeroConsonates(docente1, estudiante1);
         obtenerEstudianteNotasMayorA4(docente1, estudiante1);
+        edadEstudianteEsPrimo(docente1, estudiante1);
+        obtenerExponente(docente1, estudiante1);
         System.out.println(" ");
         obtenerNotaMayorEstudiante(docente1, estudiante2);
         obternerNotaMenorEstudiante(docente1, estudiante2);
@@ -59,6 +64,8 @@ public class Main {
         aprobacionEstudianteCurso(docente1, estudiante2);
         obtenerNumeroConsonates(docente1, estudiante2);
         obtenerEstudianteNotasMayorA4(docente1, estudiante2);
+        edadEstudianteEsPrimo(docente1, estudiante2);
+        obtenerExponente(docente1, estudiante2);
         System.out.println(" ");
         obtenerNotaMayorEstudiante(docente1, estudiante3);
         obternerNotaMenorEstudiante(docente1, estudiante3);
@@ -66,7 +73,13 @@ public class Main {
         aprobacionEstudianteCurso(docente1, estudiante3);
         obtenerNumeroConsonates(docente1, estudiante3);
         obtenerEstudianteNotasMayorA4(docente1, estudiante3);
+        edadEstudianteEsPrimo(docente1, estudiante3);
+        obtenerExponente(docente1, estudiante3);
 
+    }
+    public static void obtenerExponente(Docente docente, Estudiante estudiante){
+        double exponente =  docente.obtenerExponente(estudiante.getEdad(), estudiante.getSemestre());
+        System.out.println(estudiante.getEdad()+"^"+ estudiante.getSemestre()+" = "+exponente);
     }
     public static void obtenerNotaMayorEstudiante(Docente docente, Estudiante estudiante){
         double notaMayor = docente.obtenerNotaMayorEstudiante(estudiante.getNota1(),
@@ -120,6 +133,15 @@ public class Main {
                 estudiante.getNota4());
         if(notaMayorA4 == true){
             System.out.println(estudiante.getNombre()+" "+estudiante.getApellido()+" tiene todas sus notas superiores a 4.0");
+        }
+    }
+    public static void edadEstudianteEsPrimo(Docente docente, Estudiante estudiante){
+        boolean edadPrimo = docente.edadEstudianteEsPrimo(estudiante.getEdad());
+        if(edadPrimo == true){
+            System.out.println("La edad de "+estudiante.getNombre()+" "+estudiante.getApellido()+"("+estudiante.getEdad()+")"+" es un numero primo");
+        }else{
+            System.out.println("La edad de "+estudiante.getNombre()+" "+estudiante.getApellido()+"("+estudiante.getEdad()+")"+" no es un numero primo");
+
         }
     }
 }

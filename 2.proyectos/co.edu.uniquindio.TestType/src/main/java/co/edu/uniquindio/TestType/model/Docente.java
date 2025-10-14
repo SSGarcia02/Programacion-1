@@ -14,6 +14,24 @@ public class Docente {
         this.salario = salario;
         this.edad = edad;
     }
+    public boolean edadEstudianteEsPrimo(int edad){
+        boolean primo = true;
+        for(int i = 2; i < edad; i++){
+            if(edad % i == 0){
+                primo = false;
+                break;
+            }
+        }
+        if(primo){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public double obtenerExponente(int edad, int semestre){
+        double resutlado = Math.pow(edad, semestre);
+        return resutlado;
+    }
     public double obtenerNotaMayorEstudiante(double nota1, double nota2,
                                              double nota3, double nota4){
         double notaMayor;

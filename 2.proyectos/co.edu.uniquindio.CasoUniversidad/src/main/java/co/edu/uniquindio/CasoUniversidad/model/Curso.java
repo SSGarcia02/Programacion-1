@@ -8,8 +8,7 @@ public class Curso {
     private String grupo;
     private int creditos;
     private String jornada;
-    private ArrayList<Estudiante> listaEstudiantes = new ArrayList();
-    private ArrayList<Docente> listaDocentes = new ArrayList();
+    private Universidad ownedByUniversidad;
 
     public Curso(){}
     public Curso(String nombre, int semestre, String grupo,
@@ -52,11 +51,4 @@ public class Curso {
         this.jornada = jornada;
     }
 
-    public ArrayList<Estudiante> getListaEstudiantes() {
-        return listaEstudiantes;
-    }
-
-    public ArrayList<Docente> getListaDocentes() {
-        return listaDocentes;
-    }
 }

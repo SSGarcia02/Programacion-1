@@ -3,18 +3,21 @@ package co.edu.uniquindio.CasoUniversidad.model;
 public class Estudiante {
     private String nombre;
     private int edad;
+    private String identificacion;
     private String Correo;
     private int semestre;
     private double nota1;
     private double nota2;
     private double nota3;
+    private Universidad ownedByUniversidad;
 
     public Estudiante(){}
-    public Estudiante(String nombre, int edad, String correo,
+    public Estudiante(String nombre, int edad, String identificacion, String correo,
                       int semestre, double nota1, double nota2, double nota3) {
         this.nombre = nombre;
         this.edad = edad;
-        Correo = correo;
+        this.identificacion = identificacion;
+        this.Correo = correo;
         this.semestre = semestre;
         this.nota1 = nota1;
         this.nota2 = nota2;
@@ -60,18 +63,29 @@ public class Estudiante {
         return nota3;
     }
     public void setNota3(double nota3) {this.nota3 = nota3;}
+    public String getIdentificacion() {
+        return identificacion;
+    }
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+    public Universidad getOwnedByUniversidad() {
+        return ownedByUniversidad;
+    }
+    public void setOwnedByUniversidad(Universidad ownedByUniversidad) {
+        this.ownedByUniversidad = ownedByUniversidad;
+    }
 
     @Override
     public String toString() {
-        return "Estudiante{" +
-                "nombre='" + nombre + '\'' +
-                ", edad=" + edad +
-                ", Correo='" + Correo + '\'' +
-                ", semestre=" + semestre +
-                ", nota1=" + nota1 +
-                ", nota2=" + nota2 +
-                ", nota3=" + nota3 +
-                '}';
+        return "Estudiante: " + nombre + '\n' +
+                "Identificacion : "+identificacion+'\n'+
+                "Edad:" + edad +'\n' +
+                "Correo: "+ Correo + '\n' +
+                "Semestre: "+ semestre +
+                "\nNota 1: " +nota1 +
+                "\nNota 2: " +nota2 +
+                "\nNota 3: " +nota3 ;
     }
 }
 
