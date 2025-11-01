@@ -24,6 +24,7 @@ public class Dependencia {
     public ArrayList<Docente> listarDocente(){
         return listaDocentes;
     }
+
     public boolean editarDocente(Docente docente, int nuevaCedula) {
         Docente docenteEncontrado = obternerDocente(docente.getCedula());
         if(docenteEncontrado != null) {
