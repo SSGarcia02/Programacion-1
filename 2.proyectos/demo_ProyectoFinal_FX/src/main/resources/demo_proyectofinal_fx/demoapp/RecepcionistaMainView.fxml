@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="570.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo_proyectofinal_fx.demoapp.viewController.RecepcionistaMainViewController">
+   <children>
+      <TabPane prefHeight="570.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Registro de Usuarios">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="504.0" prefWidth="762.0">
+                    <children>
+                        <SplitPane layoutY="7.0" orientation="VERTICAL" prefHeight="534.0" prefWidth="854.0">
+                            <items>
+                                <fx:include source="RecepcionistaRegistrarUsuarioView.fxml" />
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Asignación de Membresías">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Reserva de cCases">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Control de Acceso">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Generación de Reporte">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
