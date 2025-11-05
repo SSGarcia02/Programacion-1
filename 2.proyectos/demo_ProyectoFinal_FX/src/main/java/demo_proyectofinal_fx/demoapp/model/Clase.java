@@ -65,4 +65,13 @@ public class Clase {
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+
+    public void asignarEntrenador(Entrenador entrenador) {
+        this.entrenadorAsignado = entrenador;
+        System.out.println("Entrenador asignado a la clase: " + nombre);
+    }
+    public void inscribirUsuario(Usuario usuario) {
+        this.listaUsuarios.add(usuario);
+        System.out.println("Usuario registrado en la clase: " + nombre);
+    }
 }

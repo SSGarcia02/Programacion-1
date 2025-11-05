@@ -10,6 +10,8 @@ public class Gimnasio {
     private ArrayList<Reserva> listaReserva = new ArrayList<>();
     private ArrayList<Membresia> listamembresia = new ArrayList<>();
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private  ArrayList<Clase> liistaClases = new ArrayList<>();
+    private ArrayList<Entrenador> listaEntrenadores;
 
     public Gimnasio(){}
 
@@ -81,7 +83,15 @@ public class Gimnasio {
         return usuarioEncontrado;
     }
 
-
+    public Clase obtenerClase(String nombreClase){
+        Clase clase = null;
+        for(int i=0;i<getLiistaClases().size();i++){
+            if(getLiistaClases().get(i).getNombre().equals(nombreClase)){
+                clase = getLiistaClases().get(i);
+            }
+        }
+        return clase;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -128,5 +138,21 @@ public class Gimnasio {
 
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+    }
+
+    public ArrayList<Clase> getLiistaClases() {
+        return liistaClases;
+    }
+
+    public void setLiistaClases(ArrayList<Clase> liistaClases) {
+        this.liistaClases = liistaClases;
+    }
+
+    public ArrayList<Entrenador> getListaEntrenadores() {
+        return listaEntrenadores;
+    }
+
+    public void setListaEntrenadores(ArrayList<Entrenador> listaEntrenadores) {
+        this.listaEntrenadores = listaEntrenadores;
     }
 }

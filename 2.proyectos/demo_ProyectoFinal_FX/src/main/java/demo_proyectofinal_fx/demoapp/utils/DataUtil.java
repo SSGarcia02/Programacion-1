@@ -6,9 +6,30 @@ import demo_proyectofinal_fx.demoapp.model.Externo;
 import demo_proyectofinal_fx.demoapp.model.Gimnasio;
 import demo_proyectofinal_fx.demoapp.model.TrabajadorUQ;
 
+import java.util.Scanner;
+
 public class DataUtil {
 
+
+    public static String leerStringConsola(String mensaje) {
+        String captura = "";
+        System.out.println(mensaje);
+        Scanner teclado = new Scanner(System.in);
+        captura = teclado.nextLine();
+        return captura;
+    }
+
+    public static int leerEntero(String mensaje) {
+        int dato = 0;
+        String captura = "";
+        System.out.println(mensaje);
+        Scanner teclado = new Scanner(System.in);
+        captura = teclado.nextLine();
+        dato = Integer.parseInt(captura);
+        return dato;
+    }
     public static Gimnasio inicializarDatos(){
+
         Gimnasio gimnasio = new Gimnasio("Gimnacio Uq");
 
         Estudiante estudiante1 = new Estudiante();
