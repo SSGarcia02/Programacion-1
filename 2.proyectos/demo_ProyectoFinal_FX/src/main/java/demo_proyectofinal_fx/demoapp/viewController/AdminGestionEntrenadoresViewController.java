@@ -1,10 +1,15 @@
 package demo_proyectofinal_fx.demoapp.viewController;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import demo_proyectofinal_fx.demoapp.controller.EntrenadorController;
 import demo_proyectofinal_fx.demoapp.model.Entrenador;
+import demo_proyectofinal_fx.demoapp.model.Usuario;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +19,8 @@ import javafx.scene.control.TextField;
 
 public class AdminGestionEntrenadoresViewController {
     EntrenadorController entrenadorController;
+    ObservableList<Entrenador> listaEntrenadores = FXCollections.observableArrayList();
+    Entrenador entrenadorSeleccionado;
     @FXML
     private ResourceBundle resources;
 
@@ -39,7 +46,7 @@ public class AdminGestionEntrenadoresViewController {
     private TableColumn<Entrenador,String> tcApellido;
 
     @FXML
-    private TableColumn<Entrenador,String> tcClase;
+    private TableColumn<Entrenador, ArrayList<Entrenador>> tcClase;
 
     @FXML
     private TableColumn<Entrenador,String> tcEdad;
@@ -48,10 +55,10 @@ public class AdminGestionEntrenadoresViewController {
     private TableColumn<Entrenador,String> tcIdentificacion;
 
     @FXML
-    private TableColumn<?, ?> tcNombre;
+    private TableColumn<Entrenador,String> tcNombre;
 
     @FXML
-    private TableColumn<?, ?> tcTelefono;
+    private TableColumn<Entrenador,String> tcTelefono;
 
     @FXML
     private TextField txtApellido;
@@ -78,10 +85,35 @@ public class AdminGestionEntrenadoresViewController {
     }
     private void initView() {
         initDataBinding();
-        obtenerUsuario();
-        tableUsuario.getItems().clear();
-        tableUsuario.setItems(listaUsuarios);
+        obtenerEntrenador();
+        tableGestionEntrenadores.getItems().clear();
+        tableGestionEntrenadores.setItems(listaEntrenadores);
         listenerSeleccion();
+    }
+
+    private void listenerSeleccion() {
+        tableGestionEntrenadores.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSelection) -> {
+            entrenadorSeleccionado = newSelection;
+            mostrarInformacion(entrenadorSeleccionado);
+        });
+    }
+    private void mostrarInformacion(Entrenador entrenadorSeleccionado) {
+        if(entrenadorSeleccionado != null){
+            txtNombre.setText(entrenadorSeleccionado.getNombre());
+            txtApellido.setText(entrenadorSeleccionado.getApellido());
+            txtIdentificacion.setText(entrenadorSeleccionado.getIdentificacion());
+            txtEdad.setText(String.valueOf(entrenadorSeleccionado.getEdad()));
+            txtTelefono.setText(entrenadorSeleccionado.getTelefono());
+        }
+
+    private void initDataBinding() {
+        tcNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tcApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+        tcIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
+        tcEdad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getEdad())));
+        tcTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
+
+
     }
 
     @FXML
