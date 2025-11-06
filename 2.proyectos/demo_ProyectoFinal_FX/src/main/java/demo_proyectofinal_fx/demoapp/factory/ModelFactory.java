@@ -1,5 +1,6 @@
 package demo_proyectofinal_fx.demoapp.factory;
 
+import demo_proyectofinal_fx.demoapp.model.Entrenador;
 import demo_proyectofinal_fx.demoapp.model.Gimnasio;
 import demo_proyectofinal_fx.demoapp.model.Usuario;
 import demo_proyectofinal_fx.demoapp.utils.DataUtil;
@@ -24,6 +25,9 @@ public class ModelFactory {
 
     public List<Usuario> obtenerUsuarios() {
         return gimnasio.getListaUsuarios();
+    }
+    public List<Entrenador> obtenerEntrenadores() {
+        return gimnasio.getListaEntrenadores();
     }
 
     public Usuario crearcrearUsuario(Usuario usuario) {

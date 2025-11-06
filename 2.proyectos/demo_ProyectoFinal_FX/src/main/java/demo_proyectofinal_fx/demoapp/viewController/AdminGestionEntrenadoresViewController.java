@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import demo_proyectofinal_fx.demoapp.controller.EntrenadorController;
 import demo_proyectofinal_fx.demoapp.model.Entrenador;
-import demo_proyectofinal_fx.demoapp.model.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,21 +89,9 @@ public class AdminGestionEntrenadoresViewController {
         tableGestionEntrenadores.setItems(listaEntrenadores);
         listenerSeleccion();
     }
-
-    private void listenerSeleccion() {
-        tableGestionEntrenadores.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSelection) -> {
-            entrenadorSeleccionado = newSelection;
-            mostrarInformacion(entrenadorSeleccionado);
-        });
+    private void obtenerEntrenador() {
+        listaEntrenadores.addAll(entrenadorController.obtenerEntrenadores());
     }
-    private void mostrarInformacion(Entrenador entrenadorSeleccionado) {
-        if(entrenadorSeleccionado != null){
-            txtNombre.setText(entrenadorSeleccionado.getNombre());
-            txtApellido.setText(entrenadorSeleccionado.getApellido());
-            txtIdentificacion.setText(entrenadorSeleccionado.getIdentificacion());
-            txtEdad.setText(String.valueOf(entrenadorSeleccionado.getEdad()));
-            txtTelefono.setText(entrenadorSeleccionado.getTelefono());
-        }
 
     private void initDataBinding() {
         tcNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
@@ -115,6 +102,23 @@ public class AdminGestionEntrenadoresViewController {
 
 
     }
+
+    private void listenerSeleccion() {
+        tableGestionEntrenadores.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSelection) -> {
+            entrenadorSeleccionado = newSelection;
+            mostrarInformacion(entrenadorSeleccionado);
+        });
+    }
+    private void mostrarInformacion(Entrenador entrenadorSeleccionado) {
+        if (entrenadorSeleccionado != null) {
+            txtNombre.setText(entrenadorSeleccionado.getNombre());
+            txtApellido.setText(entrenadorSeleccionado.getApellido());
+            txtIdentificacion.setText(entrenadorSeleccionado.getIdentificacion());
+            txtEdad.setText(String.valueOf(entrenadorSeleccionado.getEdad()));
+            txtTelefono.setText(entrenadorSeleccionado.getTelefono());
+        }
+    }
+
 
     @FXML
     void onActualizarEntrenador(ActionEvent event) {
