@@ -5,13 +5,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.SplitPane?>
 <AnchorPane prefHeight="571.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo_proyectofinal_fx.demoapp.viewController.AdminMainViewController">
    <children>
       <TabPane prefHeight="571.0" prefWidth="869.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Gestion de Entrenadores">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="504.0" prefWidth="762.0">
+                    <children>
+                        <SplitPane layoutY="7.0" orientation="VERTICAL" prefHeight="534.0" prefWidth="854.0">
+                            <items>
+                                <fx:include source="AdminGestionEntrenadoresView.fxml" />
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
             </content>
           </Tab>
           <Tab text="Reportes Avanzados">

@@ -33,11 +33,11 @@ public class Entrenador extends Persona{
         return buscarId;
     }
     public static void modificarEntrenador(Entrenador entrenador){
-        String nombre = DataUtil.leerStringConsola("Ingrese el nombre del Entrenador: ");
-        String apellido = DataUtil.leerStringConsola("Ingrese el apellido del Entrenador: ");
-        String identificacion = DataUtil.leerStringConsola("Ingrese la identificacion del Entrenador: ");
-        int edad = DataUtil.leerEntero("Ingrese la edad del entrenador: ");
-        String telefono = DataUtil.leerStringConsola("Ingrese el telefono del entrenador: ");
+        String nombre = Utilidades.leerStringConsola("Ingrese el nombre del Entrenador: ");
+        String apellido = Utilidades.leerStringConsola("Ingrese el apellido del Entrenador: ");
+        String identificacion = Utilidades.leerStringConsola("Ingrese la identificacion del Entrenador: ");
+        int edad = Utilidades.leerEntero("Ingrese la edad del entrenador: ");
+        String telefono = Utilidades.leerStringConsola("Ingrese el telefono del entrenador: ");
         entrenador.setNombre(nombre);
         entrenador.setApellido(apellido);
         entrenador.setIdentificacion(identificacion);
