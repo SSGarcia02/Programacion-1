@@ -8,6 +8,10 @@ import java.util.List;
 
 public class EntrenadorController {
     ModelFactory modelFactory;
+    public EntrenadorController() {
+        modelFactory = ModelFactory.getInstancia(); // <-- AQUÍ
+    }
+
     public List<Entrenador> obtenerEntrenadores() {
         return modelFactory.obtenerEntrenadores();
     }

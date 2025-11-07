@@ -1,7 +1,6 @@
 package demo_proyectofinal_fx.demoapp.viewController;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import demo_proyectofinal_fx.demoapp.controller.EntrenadorController;
@@ -9,137 +8,86 @@ import demo_proyectofinal_fx.demoapp.model.Entrenador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 
-public class AdminGestionEntrenadoresViewController {
+public class AdminGestionEntrenadoresViewController implements Initializable {
+
     EntrenadorController entrenadorController;
     ObservableList<Entrenador> listaEntrenadores = FXCollections.observableArrayList();
     Entrenador entrenadorSeleccionado;
-    @FXML
-    private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
-    private Button btnActualizar;
-
-    @FXML
-    private Button btnAsignar;
-
-    @FXML
-    private Button btnEliminar;
-
-    @FXML
-    private Button btnRegistrar;
+    private Button btnActualizar, btnAsignar, btnEliminar, btnRegistrar;
 
     @FXML
     private TableView<Entrenador> tableGestionEntrenadores;
 
     @FXML
-    private TableColumn<Entrenador,String> tcApellido;
+    private TableColumn<Entrenador,String> tcApellido, tcEdad, tcIdentificacion, tcNombre, tcTelefono, tcClase;
 
     @FXML
-    private TableColumn<Entrenador, ArrayList<Entrenador>> tcClase;
+    private TextField txtApellido, txtClase, txtEdad, txtIdentificacion, txtNombre, txtTelefono;
 
-    @FXML
-    private TableColumn<Entrenador,String> tcEdad;
-
-    @FXML
-    private TableColumn<Entrenador,String> tcIdentificacion;
-
-    @FXML
-    private TableColumn<Entrenador,String> tcNombre;
-
-    @FXML
-    private TableColumn<Entrenador,String> tcTelefono;
-
-    @FXML
-    private TextField txtApellido;
-
-    @FXML
-    private TextField txtClase;
-
-    @FXML
-    private TextField txtEdad;
-
-    @FXML
-    private TextField txtIdentificacion;
-
-    @FXML
-    private TextField txtNombre;
-
-    @FXML
-    private TextField txtTelefono;
-
-    @FXML
-    void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         entrenadorController = new EntrenadorController();
         initView();
     }
+
     private void initView() {
         initDataBinding();
-        obtenerEntrenador();
-        tableGestionEntrenadores.getItems().clear();
-        tableGestionEntrenadores.setItems(listaEntrenadores);
+        cargarEntrenadores();
         listenerSeleccion();
-    }
-    private void obtenerEntrenador() {
-        listaEntrenadores.addAll(entrenadorController.obtenerEntrenadores());
     }
 
     private void initDataBinding() {
-        tcNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        tcApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
-        tcIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
-        tcEdad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getEdad())));
-        tcTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
+        tcNombre.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getNombre()));
+        tcApellido.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getApellido()));
+        tcIdentificacion.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getIdentificacion()));
+        tcEdad.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getEdad())));
+        tcTelefono.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getTelefono()));
 
+        // si en Entrenador hay un método getClaseAsignada()
+        //tcClase.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getClaseAsignada()));
+    }
 
+    private void cargarEntrenadores() {
+        listaEntrenadores.clear();
+        listaEntrenadores.addAll(entrenadorController.obtenerEntrenadores());
+        tableGestionEntrenadores.setItems(listaEntrenadores);
     }
 
     private void listenerSeleccion() {
-        tableGestionEntrenadores.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSelection) -> {
-            entrenadorSeleccionado = newSelection;
-            mostrarInformacion(entrenadorSeleccionado);
+        tableGestionEntrenadores.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            entrenadorSeleccionado = newValue;
+            mostrarInformacion();
         });
     }
-    private void mostrarInformacion(Entrenador entrenadorSeleccionado) {
+
+    private void mostrarInformacion() {
         if (entrenadorSeleccionado != null) {
             txtNombre.setText(entrenadorSeleccionado.getNombre());
             txtApellido.setText(entrenadorSeleccionado.getApellido());
             txtIdentificacion.setText(entrenadorSeleccionado.getIdentificacion());
             txtEdad.setText(String.valueOf(entrenadorSeleccionado.getEdad()));
             txtTelefono.setText(entrenadorSeleccionado.getTelefono());
+            //txtClase.setText(entrenadorSeleccionado.getClaseAsignada());
         }
     }
 
-
     @FXML
-    void onActualizarEntrenador(ActionEvent event) {
-
+    void onRegistrarEntrenador() {
+        // luego implementamos esto
     }
 
     @FXML
-    void onAsignarEntrenador(ActionEvent event) {
-
-    }
+    void onActualizarEntrenador() {}
 
     @FXML
-    void onEliminarEntrenador(ActionEvent event) {
-
-    }
+    void onAsignarEntrenador() {}
 
     @FXML
-    void onRegistrarEntrenador(ActionEvent event) {
-
-    }
-
-
-
+    void onEliminarEntrenador() {}
 }
