@@ -15,4 +15,7 @@ public class EntrenadorController {
     public List<Entrenador> obtenerEntrenadores() {
         return modelFactory.obtenerEntrenadores();
     }
+    public boolean asignarEntrenadorAClase(String idEntrenador, String nombreClase) {
+        return modelFactory.asignarEntrenadorAClase(idEntrenador, nombreClase);
+    }
 }

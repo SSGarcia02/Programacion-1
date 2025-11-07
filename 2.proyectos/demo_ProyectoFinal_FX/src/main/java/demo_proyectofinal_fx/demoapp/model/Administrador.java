@@ -30,15 +30,16 @@ public class Administrador extends UsuarioSistema{
             System.out.println("❌ No existe un entrenador con ese ID.");
         }
     }
-    public void eliminarEntrenador() {
-        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a eliminar: ");
+    public boolean eliminarEntrenador(String id) {
+
         Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
-        if(resultado != null) {
+
+        if (resultado != null) {
             gimnasio.getListaEntrenadores().remove(resultado);
-            System.out.println("✅ Entrenador eliminado correctamente.");
-        } else {
-            System.out.println("❌ No existe un entrenador con ese ID.");
+            return true;
         }
+
+        return false;
     }
     public void asignarEntrenadorClases(){
         String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a asignar: ");

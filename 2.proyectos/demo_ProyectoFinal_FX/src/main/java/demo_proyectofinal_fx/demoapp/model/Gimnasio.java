@@ -12,6 +12,7 @@ public class Gimnasio {
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     private  ArrayList<Clase> liistaClases = new ArrayList<>();
     private ArrayList<Entrenador> listaEntrenadores = new ArrayList<>();
+    private Administrador administrador;
 
     public Gimnasio(){}
 
@@ -155,4 +156,26 @@ public class Gimnasio {
     public void setListaEntrenadores(ArrayList<Entrenador> listaEntrenadores) {
         this.listaEntrenadores = listaEntrenadores;
     }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
+    }
+
+    public boolean eliminarEntrenador(String idEntrenador) {
+
+        // Buscar administrador dentro de listaPersonas
+        for (Persona persona : listaPersonas) {
+            if (persona instanceof Administrador admin) {
+                return admin.eliminarEntrenador(idEntrenador);
+            }
+        }
+
+        System.out.println("❌ No existe administrador en el gimnasio.");
+        return false;
+    }
+
 }

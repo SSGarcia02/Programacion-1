@@ -77,7 +77,11 @@ public class DataUtil {
         entrenador2.setEdad(40);
         entrenador2.setTelefono("3103010283");
         entrenador2.setIdentificacion("1007");
+        Administrador admin = new Administrador(
+                "Isabela", "Rincon", "10065", 36, "3185658564",
+                "1234", gimnasio );
 
+        gimnasio.setAdministrador(admin);
         gimnasio.getListaUsuarios().add(estudiante1);
         gimnasio.getListaUsuarios().add(estudiante2);
         gimnasio.getListaUsuarios().add(estudiante3);

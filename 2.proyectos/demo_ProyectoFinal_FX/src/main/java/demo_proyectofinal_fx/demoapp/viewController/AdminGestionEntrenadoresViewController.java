@@ -3,6 +3,9 @@ package demo_proyectofinal_fx.demoapp.viewController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import demo_proyectofinal_fx.demoapp.factory.ModelFactory;
+import javafx.event.ActionEvent;
+
 import demo_proyectofinal_fx.demoapp.controller.EntrenadorController;
 import demo_proyectofinal_fx.demoapp.model.Entrenador;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,6 +20,9 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
     EntrenadorController entrenadorController;
     ObservableList<Entrenador> listaEntrenadores = FXCollections.observableArrayList();
     Entrenador entrenadorSeleccionado;
+    ModelFactory mfc = ModelFactory.getInstancia();
+
+    @FXML private Label lblMensaje;
 
     @FXML
     private Button btnActualizar, btnAsignar, btnEliminar, btnRegistrar;
@@ -86,8 +92,50 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
     void onActualizarEntrenador() {}
 
     @FXML
-    void onAsignarEntrenador() {}
+    void onAsignarEntrenador(ActionEvent event) {
+
+        if (entrenadorSeleccionado == null) {
+            mostrarAlerta("Debe seleccionar un entrenador de la tabla");
+            return;
+        }
+
+        String nombreClase = txtClase.getText().trim();
+
+        if (nombreClase.isEmpty()) {
+            mostrarAlerta("Debe ingresar el nombre de la clase");
+            return;
+        }
+
+        boolean asignado = entrenadorController.asignarEntrenadorAClase(
+                entrenadorSeleccionado.getIdentificacion(),
+                nombreClase
+        );
+
+        if (asignado) {
+            mostrarAlerta("✅ Entrenador asignado correctamente.");
+        } else {
+            mostrarAlerta("❌ No se encontró la clase.");
+        }
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
 
     @FXML
-    void onEliminarEntrenador() {}
+    public void onEliminarEntrenador(ActionEvent event) {
+        String id = txtIdentificacion.getText();
+
+        boolean eliminado = ModelFactory.getInstancia().eliminarEntrenadorFX(id);
+
+        if (eliminado) {
+            System.out.println("✅ Entrenador eliminado correctamente.");
+        } else {
+            System.out.println("❌ No existe un entrenador con ese ID.");
+        }
+    }
 }

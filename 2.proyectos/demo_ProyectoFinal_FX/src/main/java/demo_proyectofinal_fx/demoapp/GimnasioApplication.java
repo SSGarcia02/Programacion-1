@@ -34,11 +34,11 @@ public class GimnasioApplication extends Application {
     }
 }
 
-///    @Override
-///     public void start(Stage stage) throws IOException {
-///         FXMLLoader fxmlLoader = new FXMLLoader(GimnasioApplication.class.getResource("RecepcionistaMainView.fxml"));
-///         Scene scene = new Scene(fxmlLoader.load());
-///         stage.setTitle("App Gimnasio UQ");
-///         stage.setScene(scene);
-///         stage.show();
-///     }
+/*   @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GimnasioApplication.class.getResource("RecepcionistaMainView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("App Gimnasio UQ");
+        stage.setScene(scene);
+         stage.show();
+     }*/
