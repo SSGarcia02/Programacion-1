@@ -3,7 +3,7 @@ module demo_proyectofinal_fx.demoapp {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.base;
-    requires demo_proyectofinal_fx.demoapp;
+
 
 
     opens demo_proyectofinal_fx.demoapp to javafx.fxml;

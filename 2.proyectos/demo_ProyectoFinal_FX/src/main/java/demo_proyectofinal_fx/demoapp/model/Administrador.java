@@ -1,5 +1,7 @@
 package demo_proyectofinal_fx.demoapp.model;
 
+import demo_proyectofinal_fx.demoapp.utils.DataUtil;
+
 public class Administrador extends UsuarioSistema{
 
     private Gimnasio gimnasio;  // relación con Gimnasio (para acceder a entrenadores, clases)
@@ -19,7 +21,7 @@ public class Administrador extends UsuarioSistema{
     }
 
     public void modificarEntrenador() {
-        String id = Utilidades.leerStringConsola("Ingrese la identificacion del entrenador a modificar: ");
+        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a modificar: ");
         Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
         if(resultado != null) {
             Entrenador.modificarEntrenador(resultado);
@@ -29,7 +31,7 @@ public class Administrador extends UsuarioSistema{
         }
     }
     public void eliminarEntrenador() {
-        String id = Utilidades.leerStringConsola("Ingrese la identificacion del entrenador a eliminar: ");
+        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a eliminar: ");
         Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
         if(resultado != null) {
             gimnasio.getListaEntrenadores().remove(resultado);
@@ -39,10 +41,10 @@ public class Administrador extends UsuarioSistema{
         }
     }
     public void asignarEntrenadorClases(){
-        String id = Utilidades.leerStringConsola("Ingrese la identificacion del entrenador a asignar: ");
+        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a asignar: ");
         Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
         if(resultado != null) {
-            String nombreClase = Utilidades.leerStringConsola("Ingrese el nombre de la clase: ");
+            String nombreClase = DataUtil.leerStringConsola("Ingrese el nombre de la clase: ");
             Clase clase = gimnasio.obtenerClase(nombreClase);
             if(clase != null){
                 clase.asignarEntrenador(resultado);
@@ -56,7 +58,7 @@ public class Administrador extends UsuarioSistema{
 
     }
     public void controlarAcceso() {
-        String idUsuario = Utilidades.leerStringConsola("Ingrese identificación del usuario: ");
+        String idUsuario = DataUtil.leerStringConsola("Ingrese identificación del usuario: ");
         Usuario usuario = gimnasio.obtenerUsuario(idUsuario);
         if (usuario == null) {
             System.out.println("❌ Usuario no encontrado.");
@@ -66,7 +68,7 @@ public class Administrador extends UsuarioSistema{
             System.out.println("❌ Membresía inactiva. No puede ingresar.");
             return;
         }
-        String nombreClase = Utilidades.leerStringConsola("Ingrese el nombre de la clase a la que desea acceder: ");
+        String nombreClase = DataUtil.leerStringConsola("Ingrese el nombre de la clase a la que desea acceder: ");
         Clase clase = gimnasio.obtenerClase(nombreClase);
 
         if(clase == null){

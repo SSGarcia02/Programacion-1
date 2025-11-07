@@ -3,7 +3,7 @@ package demo_proyectofinal_fx.demoapp.model;
 import java.util.ArrayList;
 
 public class Usuario extends Persona{
-    private Membresia memebresia;
+    private Membresia membresia;
     private Estudiante estudiante;
     private TrabajadorUQ trabajadorUQ;
     private Externo externo;
@@ -11,12 +11,12 @@ public class Usuario extends Persona{
 
     public Usuario(){}
 
-    public Membresia getMemebresia() {
-        return memebresia;
+    public Membresia getMembresia() {
+        return membresia;
     }
 
-    public void setMemebresia(Membresia memebresia) {
-        this.memebresia = memebresia;
+    public void setMembresia(Membresia memebresia) {
+        this.membresia = membresia;
     }
 
     public Estudiante getEstudiante() {
@@ -49,5 +49,9 @@ public class Usuario extends Persona{
 
     public void setListaClases(ArrayList<Clase> listaClases) {
         this.listaClases = listaClases;
+    }
+
+    public boolean tieneMembresiaActiva() {
+        return membresia != null && membresia.isEstado();
     }
 }

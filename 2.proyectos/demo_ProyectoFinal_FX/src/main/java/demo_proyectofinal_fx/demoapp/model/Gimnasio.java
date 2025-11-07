@@ -11,7 +11,7 @@ public class Gimnasio {
     private ArrayList<Membresia> listamembresia = new ArrayList<>();
     private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     private  ArrayList<Clase> liistaClases = new ArrayList<>();
-    private ArrayList<Entrenador> listaEntrenadores;
+    private ArrayList<Entrenador> listaEntrenadores = new ArrayList<>();
 
     public Gimnasio(){}
 
