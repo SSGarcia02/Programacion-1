@@ -166,8 +166,6 @@ public class Gimnasio {
     }
 
     public boolean eliminarEntrenador(String idEntrenador) {
-
-        // Buscar administrador dentro de listaPersonas
         for (Persona persona : listaPersonas) {
             if (persona instanceof Administrador admin) {
                 return admin.eliminarEntrenador(idEntrenador);
@@ -181,7 +179,7 @@ public class Gimnasio {
         return administrador.registrarEntrenador(nombre, apellido, id, edad, telefono);
     }
     public Entrenador obtenerEntrenador(String id) {
-        for (Entrenador e : listaEntrenadores) {   // <-- usa el nombre correcto de tu lista
+        for (Entrenador e : listaEntrenadores) {
             if (e.getIdentificacion().equals(id)) {
                 return e;
             }

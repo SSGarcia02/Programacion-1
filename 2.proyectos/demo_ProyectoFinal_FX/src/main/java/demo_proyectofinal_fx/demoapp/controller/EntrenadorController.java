@@ -10,7 +10,7 @@ public class EntrenadorController {
     private final ModelFactory modelFactory;
 
     public EntrenadorController() {
-        this.modelFactory = ModelFactory.getInstancia(); // asegúrate de que el método se llame así
+        this.modelFactory = ModelFactory.getInstancia();
     }
 
     public List<Entrenador> obtenerEntrenadores() {

@@ -55,8 +55,6 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
         tcEdad.setCellValueFactory(cd -> new SimpleStringProperty(String.valueOf(cd.getValue().getEdad())));
         tcTelefono.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getTelefono()));
 
-        // si en Entrenador hay un método getClaseAsignada()
-        //tcClase.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getClaseAsignada()));
     }
 
     private void cargarEntrenadores() {
@@ -94,9 +92,8 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
 
         Entrenador nuevo = entrenadorController.registrarEntrenador(nombre, apellido, id, edad, telefono);
 
-        listaEntrenadores.add(nuevo); // ✅ ACTUALIZA TABLA AUTOMÁTICAMENTE
-        tableGestionEntrenadores.refresh(); // OPCIONAL
-
+        listaEntrenadores.add(nuevo);
+        tableGestionEntrenadores.refresh();
         mostrarAlerta("✅ Entrenador registrado con éxito.");
     }
     @FXML
@@ -148,10 +145,10 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
         if (eliminado) {
             mostrarAlerta("✅ Entrenador eliminado correctamente.");
 
-            cargarEntrenadores();   // ⬅️ Recarga la tabla
-            limpiarCampos();        // ⬅️ Limpia los campos de texto
+            cargarEntrenadores();
+            limpiarCampos();
 
-            entrenadorSeleccionado = null; // ⬅️ Evita usar un entrenador ya eliminado
+            entrenadorSeleccionado = null;
         } else {
             mostrarAlerta("❌ No existe un entrenador con ese ID.");
         }
@@ -172,8 +169,6 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
             mostrarAlerta("Debe seleccionar un entrenador para actualizar.");
             return;
         }
-
-        // Obtener lo que escribe el usuario en los TextField
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String id = txtIdentificacion.getText();
