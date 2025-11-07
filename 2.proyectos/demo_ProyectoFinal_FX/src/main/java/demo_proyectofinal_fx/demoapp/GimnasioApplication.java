@@ -13,7 +13,7 @@ public class GimnasioApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        cambiarEscena("RecepcionistaMainView.fxml", "App Gimnasio UQ");
+        cambiarEscena("AdminMainView.fxml", "App Gimnasio UQ");
     }
     public static void cambiarEscena(String fxml, String tituloVentana) {
         try {

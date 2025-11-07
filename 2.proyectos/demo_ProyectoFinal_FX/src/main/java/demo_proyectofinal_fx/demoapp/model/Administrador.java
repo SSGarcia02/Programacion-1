@@ -11,13 +11,10 @@ public class Administrador extends UsuarioSistema{
         this.gimnasio = gimnasio;
     }
 
-    public void registrarEntrenador() {
-
-        Entrenador nuevo = Entrenador.registrarEntrenador(); // <-- se encarga Entrenador
-
+    public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
+        Entrenador nuevo = Entrenador.registrarEntrenador(nombre, apellido, id, edad, telefono);
         gimnasio.getListaEntrenadores().add(nuevo);
-
-        System.out.println("\n✅ Entrenador agregado al gimnasio correctamente.");
+        return nuevo;
     }
 
     public void modificarEntrenador() {

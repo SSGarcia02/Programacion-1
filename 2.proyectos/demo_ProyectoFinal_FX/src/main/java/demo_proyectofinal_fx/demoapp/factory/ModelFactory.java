@@ -63,5 +63,28 @@ public class ModelFactory {
 
         return false;
     }
+    public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
+        return gimnasio.registrarEntrenador(nombre, apellido, id, edad, telefono);
+    }
+
+    public boolean actualizarEntrenador(String idActual,
+                                        String nombre,
+                                        String apellido,
+                                        String nuevoId,
+                                        int edad,
+                                        String telefono) {
+
+        Entrenador e = gimnasio.obtenerEntrenador(idActual);
+
+        if (e != null) {
+            gimnasio.actualizarEntrenador(e, nombre, apellido, nuevoId, edad, telefono);
+            return true;
+        }
+
+        return false;
+    }
+    public Entrenador obtenerEntrenador(String id) {
+        return gimnasio.obtenerEntrenador(id);
+    }
 
 }

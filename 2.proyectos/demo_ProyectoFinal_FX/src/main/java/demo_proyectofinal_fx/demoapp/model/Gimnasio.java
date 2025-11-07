@@ -177,5 +177,29 @@ public class Gimnasio {
         System.out.println("❌ No existe administrador en el gimnasio.");
         return false;
     }
+    public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
+        return administrador.registrarEntrenador(nombre, apellido, id, edad, telefono);
+    }
+    public Entrenador obtenerEntrenador(String id) {
+        for (Entrenador e : listaEntrenadores) {   // <-- usa el nombre correcto de tu lista
+            if (e.getIdentificacion().equals(id)) {
+                return e;
+            }
+        }
+        return null;
+    }
+    public void actualizarEntrenador(Entrenador entrenador,
+                                     String nombre,
+                                     String apellido,
+                                     String id,
+                                     int edad,
+                                     String telefono) {
+
+        entrenador.setNombre(nombre);
+        entrenador.setApellido(apellido);
+        entrenador.setIdentificacion(id);
+        entrenador.setEdad(edad);
+        entrenador.setTelefono(telefono);
+    }
 
 }

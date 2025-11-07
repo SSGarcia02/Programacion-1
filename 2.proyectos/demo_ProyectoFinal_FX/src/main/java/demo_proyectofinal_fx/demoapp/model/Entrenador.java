@@ -34,14 +34,8 @@ public class Entrenador extends Persona{
         this.listaClases = listaClases;
     }
 
-    public static Entrenador registrarEntrenador (){
-        String nombre = DataUtil.leerStringConsola("Ingrese el nombre del cliente: ");
-        String apellido = DataUtil.leerStringConsola("Ingrese el apellido del cliente");
-        String id= DataUtil.leerStringConsola("Ingrese el id del cliente");
-        int edad = DataUtil.leerEntero("Ingrese la edad del entrenador: ");
-        String telefono = DataUtil.leerStringConsola("Ingrese el telefono del entrenador: ");
-        Entrenador entrenador = new Entrenador(nombre, apellido, id, edad, telefono);
-        return entrenador;
+    public static Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono){
+        return new Entrenador(nombre, apellido, id, edad, telefono);
     }
     public static Entrenador obtenerEntrenador(Gimnasio gimnasio, String identificacion) {
         Entrenador buscarId = null;

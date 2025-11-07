@@ -85,12 +85,20 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
 
     @FXML
     void onRegistrarEntrenador() {
-        // luego implementamos esto
+
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String id = txtIdentificacion.getText();
+        int edad = Integer.parseInt(txtEdad.getText());
+        String telefono = txtTelefono.getText();
+
+        Entrenador nuevo = entrenadorController.registrarEntrenador(nombre, apellido, id, edad, telefono);
+
+        listaEntrenadores.add(nuevo); // ✅ ACTUALIZA TABLA AUTOMÁTICAMENTE
+        tableGestionEntrenadores.refresh(); // OPCIONAL
+
+        mostrarAlerta("✅ Entrenador registrado con éxito.");
     }
-
-    @FXML
-    void onActualizarEntrenador() {}
-
     @FXML
     void onAsignarEntrenador(ActionEvent event) {
 
@@ -125,17 +133,64 @@ public class AdminGestionEntrenadoresViewController implements Initializable {
         alert.showAndWait();
     }
 
-
     @FXML
     public void onEliminarEntrenador(ActionEvent event) {
-        String id = txtIdentificacion.getText();
 
-        boolean eliminado = ModelFactory.getInstancia().eliminarEntrenadorFX(id);
+        if (entrenadorSeleccionado == null) {
+            mostrarAlerta("⚠ Debe seleccionar un entrenador de la tabla.");
+            return;
+        }
+
+        String id = entrenadorSeleccionado.getIdentificacion();
+
+        boolean eliminado = entrenadorController.eliminarEntrenador(id);
 
         if (eliminado) {
-            System.out.println("✅ Entrenador eliminado correctamente.");
+            mostrarAlerta("✅ Entrenador eliminado correctamente.");
+
+            cargarEntrenadores();   // ⬅️ Recarga la tabla
+            limpiarCampos();        // ⬅️ Limpia los campos de texto
+
+            entrenadorSeleccionado = null; // ⬅️ Evita usar un entrenador ya eliminado
         } else {
-            System.out.println("❌ No existe un entrenador con ese ID.");
+            mostrarAlerta("❌ No existe un entrenador con ese ID.");
+        }
+    }
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtApellido.clear();
+        txtIdentificacion.clear();
+        txtEdad.clear();
+        txtTelefono.clear();
+        txtClase.clear();
+    }
+
+    @FXML
+    void onActualizarEntrenador() {
+
+        if (entrenadorSeleccionado == null) {
+            mostrarAlerta("Debe seleccionar un entrenador para actualizar.");
+            return;
+        }
+
+        // Obtener lo que escribe el usuario en los TextField
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String id = txtIdentificacion.getText();
+        int edad = Integer.parseInt(txtEdad.getText());
+        String telefono = txtTelefono.getText();
+
+        boolean actualizado = entrenadorController.actualizarEntrenador(
+                entrenadorSeleccionado.getIdentificacion(),
+                nombre, apellido, id, edad, telefono
+        );
+
+        if (actualizado) {
+            mostrarAlerta("✅ Entrenador actualizado correctamente.");
+            cargarEntrenadores();   // <-- RECARGA LA TABLA
+            tableGestionEntrenadores.refresh(); // <-- REFRESCA LA UI
+        } else {
+            mostrarAlerta("❌ No se pudo actualizar el entrenador.");
         }
     }
 }
