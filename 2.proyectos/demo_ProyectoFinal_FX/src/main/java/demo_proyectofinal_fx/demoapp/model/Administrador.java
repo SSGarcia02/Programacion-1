@@ -38,22 +38,20 @@ public class Administrador extends UsuarioSistema{
 
         return false;
     }
-    public void asignarEntrenadorClases(){
-        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a asignar: ");
-        Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
-        if(resultado != null) {
-            String nombreClase = DataUtil.leerStringConsola("Ingrese el nombre de la clase: ");
-            Clase clase = gimnasio.obtenerClase(nombreClase);
-            if(clase != null){
-                clase.asignarEntrenador(resultado);
-                System.out.println("✅ Entrenador asignado correctamente.");}
-            else{
-                System.out.println("❌ la clase no fue encontrada");
-            }
-        } else {
-            System.out.println("❌ No existe un entrenador con ese ID.");
+    public boolean asignarEntrenador(String idEntrenador, String nombreClase) {
+        Entrenador entrenador = Entrenador.obtenerEntrenador(gimnasio, idEntrenador);
+        if (entrenador == null) {
+            System.out.println("❌ Entrenador no encontrado.");
+            return false;
         }
-
+        Clase clase = gimnasio.obtenerClase(nombreClase);
+        if (clase == null) {
+            System.out.println("❌ Clase no encontrada.");
+            return false;
+        }
+        clase.asignarEntrenador(entrenador);
+        entrenador.agregarClase(nombreClase);
+        return true;
     }
     public void controlarAcceso() {
         String idUsuario = DataUtil.leerStringConsola("Ingrese identificación del usuario: ");

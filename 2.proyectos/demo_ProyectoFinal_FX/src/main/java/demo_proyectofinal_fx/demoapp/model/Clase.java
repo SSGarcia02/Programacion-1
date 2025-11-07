@@ -74,4 +74,5 @@ public class Clase {
         this.listaUsuarios.add(usuario);
         System.out.println("Usuario registrado en la clase: " + nombre);
     }
+
 }

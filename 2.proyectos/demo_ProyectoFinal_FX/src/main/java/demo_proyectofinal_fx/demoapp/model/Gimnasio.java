@@ -189,15 +189,16 @@ public class Gimnasio {
     public void actualizarEntrenador(Entrenador entrenador,
                                      String nombre,
                                      String apellido,
-                                     String id,
+                                     String nuevoId,
                                      int edad,
                                      String telefono) {
-
+        // Solo actualizar datos personales
         entrenador.setNombre(nombre);
         entrenador.setApellido(apellido);
-        entrenador.setIdentificacion(id);
+        entrenador.setIdentificacion(nuevoId);
         entrenador.setEdad(edad);
         entrenador.setTelefono(telefono);
+        // NO modificar las clases asignadas
     }
 
 }

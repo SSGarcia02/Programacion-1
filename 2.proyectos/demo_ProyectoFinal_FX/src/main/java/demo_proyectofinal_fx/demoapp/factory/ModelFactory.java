@@ -51,17 +51,16 @@ public class ModelFactory {
 
         return admin.eliminarEntrenador(id);
     }
-    public boolean asignarEntrenadorAClase(String idEntrenador, String nombreClase) {
+    public boolean asignarEntrenador(String idEntrenador, String nombreClase) {
 
-        Entrenador entrenador = Entrenador.obtenerEntrenador(gimnasio, idEntrenador);
-        Clase clase = gimnasio.obtenerClase(nombreClase);
+        Administrador admin = gimnasio.getAdministrador();
 
-        if (entrenador != null && clase != null) {
-            clase.asignarEntrenador(entrenador);
-            return true;
+        if (admin == null) {
+            System.out.println("❌ No existe administrador en el gimnasio.");
+            return false;
         }
 
-        return false;
+        return admin.asignarEntrenador(idEntrenador, nombreClase);
     }
     public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
         return gimnasio.registrarEntrenador(nombre, apellido, id, edad, telefono);
@@ -73,14 +72,11 @@ public class ModelFactory {
                                         String nuevoId,
                                         int edad,
                                         String telefono) {
-
         Entrenador e = gimnasio.obtenerEntrenador(idActual);
-
         if (e != null) {
             gimnasio.actualizarEntrenador(e, nombre, apellido, nuevoId, edad, telefono);
             return true;
         }
-
         return false;
     }
     public Entrenador obtenerEntrenador(String id) {

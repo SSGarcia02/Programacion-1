@@ -3,6 +3,7 @@ package demo_proyectofinal_fx.demoapp.utils;
 
 import demo_proyectofinal_fx.demoapp.model.*;
 
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class DataUtil {
@@ -80,6 +81,13 @@ public class DataUtil {
         Administrador admin = new Administrador(
                 "Isabela", "Rincon", "10065", 36, "3185658564",
                 "1234", gimnasio );
+        Clase yoga = new Clase("Yoga Mañana", TipoClases.YOGA, LocalTime.of(8, 0), 20);
+        Clase rumba = new Clase("Rumba", TipoClases.RUMBA, LocalTime.of(18, 0), 25);
+        Clase spinning = new Clase("Spinning Nocturno", TipoClases.SPINNING, LocalTime.of(20, 0), 15);
+
+        gimnasio.getLiistaClases().add(yoga);
+        gimnasio.getLiistaClases().add(rumba);
+        gimnasio.getLiistaClases().add(spinning);
 
         gimnasio.setAdministrador(admin);
         gimnasio.getListaUsuarios().add(estudiante1);

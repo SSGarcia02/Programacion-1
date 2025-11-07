@@ -17,8 +17,8 @@ public class EntrenadorController {
         return modelFactory.obtenerEntrenadores();
     }
 
-    public boolean asignarEntrenadorAClase(String idEntrenador, String nombreClase) {
-        return modelFactory.asignarEntrenadorAClase(idEntrenador, nombreClase);
+    public boolean asignarEntrenador(String idEntrenador, String nombreClase) {
+        return modelFactory.asignarEntrenador(idEntrenador, nombreClase);
     }
 
     public boolean eliminarEntrenador(String idEntrenador) {
