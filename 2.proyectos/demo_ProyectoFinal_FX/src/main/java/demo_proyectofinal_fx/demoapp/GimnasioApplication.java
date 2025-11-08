@@ -13,8 +13,10 @@ public class GimnasioApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        cambiarEscena("AdminMainView.fxml", "App Gimnasio UQ");
+        // Cambiar para que empiece con el Login
+        cambiarEscena("LoginView.fxml", "Login - Gimnasio UQ");
     }
+
     public static void cambiarEscena(String fxml, String tituloVentana) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(GimnasioApplication.class.getResource(fxml));
@@ -27,13 +29,10 @@ public class GimnasioApplication extends Application {
         }
     }
 
-
-
     public static void main(String[] args) {
         launch();
     }
 }
-
 /*   @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GimnasioApplication.class.getResource("RecepcionistaMainView.fxml"));

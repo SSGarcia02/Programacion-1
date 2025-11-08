@@ -13,14 +13,20 @@ public class Gimnasio {
     private  ArrayList<Clase> liistaClases = new ArrayList<>();
     private ArrayList<Entrenador> listaEntrenadores = new ArrayList<>();
     private Administrador administrador;
+    private ArrayList<UsuarioSistema> listaUsuariosSistema = new ArrayList<>();
 
     public Gimnasio(){}
 
     public Gimnasio(String nombre) {
         this.nombre = nombre;
     }
+    public ArrayList<UsuarioSistema> getListaUsuariosSistema() {
+        return listaUsuariosSistema;
+    }
 
-
+    public void setListaUsuariosSistema(ArrayList<UsuarioSistema> listaUsuariosSistema) {
+        this.listaUsuariosSistema = listaUsuariosSistema;
+    }
     public ArrayList<Usuario> mostrarUsuarios(){
         return listaUsuarios;
     }
@@ -192,13 +198,19 @@ public class Gimnasio {
                                      String nuevoId,
                                      int edad,
                                      String telefono) {
-        // Solo actualizar datos personales
         entrenador.setNombre(nombre);
         entrenador.setApellido(apellido);
         entrenador.setIdentificacion(nuevoId);
         entrenador.setEdad(edad);
         entrenador.setTelefono(telefono);
-        // NO modificar las clases asignadas
+    }
+    public UsuarioSistema autenticarUsuario(String usuario, String password) {
+        for (UsuarioSistema user : listaUsuariosSistema) {
+            if (user.getNombre().equals(usuario) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
     }
 
 }

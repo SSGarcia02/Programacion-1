@@ -82,5 +82,8 @@ public class ModelFactory {
     public Entrenador obtenerEntrenador(String id) {
         return gimnasio.obtenerEntrenador(id);
     }
+    public UsuarioSistema autenticarUsuario(String usuario, String password) {
+        return gimnasio.autenticarUsuario(usuario, password);
+    }
 
 }

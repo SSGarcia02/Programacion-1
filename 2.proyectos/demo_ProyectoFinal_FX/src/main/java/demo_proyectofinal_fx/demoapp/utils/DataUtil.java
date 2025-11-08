@@ -1,13 +1,11 @@
 package demo_proyectofinal_fx.demoapp.utils;
 
-
 import demo_proyectofinal_fx.demoapp.model.*;
 
 import java.time.LocalTime;
 import java.util.Scanner;
 
 public class DataUtil {
-
 
     public static String leerStringConsola(String mensaje) {
         String captura = "";
@@ -26,9 +24,31 @@ public class DataUtil {
         dato = Integer.parseInt(captura);
         return dato;
     }
-    public static Gimnasio inicializarDatos(){
 
-        Gimnasio gimnasio = new Gimnasio("Gimnacio Uq");
+    public static Gimnasio inicializarDatos(){
+        Gimnasio gimnasio = new Gimnasio("Gimnasio UQ");
+
+        // CREAR ADMINISTRADOR (solo una vez)
+        Administrador admin = new Administrador(
+                "admin",
+                "Sistema",
+                "10065",
+                36,
+                "3185658564",
+                "1234",
+                gimnasio
+        );
+        Recepcionista recepcionista = new Recepcionista(
+                "recepcion",
+                "Recepcion",
+                "10066",
+                28,
+                "3185658565",
+                "1234"
+        );
+        gimnasio.getListaUsuariosSistema().add(admin);
+        gimnasio.getListaUsuariosSistema().add(recepcionista);
+        gimnasio.setAdministrador(admin);
 
         Estudiante estudiante1 = new Estudiante();
         estudiante1.setNombre("Sebastian");
@@ -78,18 +98,13 @@ public class DataUtil {
         entrenador2.setEdad(40);
         entrenador2.setTelefono("3103010283");
         entrenador2.setIdentificacion("1007");
-        Administrador admin = new Administrador(
-                "Isabela", "Rincon", "10065", 36, "3185658564",
-                "1234", gimnasio );
+
         Clase yoga = new Clase("Yoga Mañana", TipoClases.YOGA, LocalTime.of(8, 0), 20);
         Clase rumba = new Clase("Rumba", TipoClases.RUMBA, LocalTime.of(18, 0), 25);
         Clase spinning = new Clase("Spinning Nocturno", TipoClases.SPINNING, LocalTime.of(20, 0), 15);
-
         gimnasio.getLiistaClases().add(yoga);
         gimnasio.getLiistaClases().add(rumba);
         gimnasio.getLiistaClases().add(spinning);
-
-        gimnasio.setAdministrador(admin);
         gimnasio.getListaUsuarios().add(estudiante1);
         gimnasio.getListaUsuarios().add(estudiante2);
         gimnasio.getListaUsuarios().add(estudiante3);
@@ -97,7 +112,6 @@ public class DataUtil {
         gimnasio.getListaUsuarios().add(externo1);
         gimnasio.getListaEntrenadores().add(entrenador1);
         gimnasio.getListaEntrenadores().add(entrenador2);
-
 
         return gimnasio;
     }
