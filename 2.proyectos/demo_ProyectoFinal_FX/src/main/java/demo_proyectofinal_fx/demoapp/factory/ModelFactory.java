@@ -1,5 +1,7 @@
 package demo_proyectofinal_fx.demoapp.factory;
 
+import demo_proyectofinal_fx.demoapp.exceptions.MembresiaException;
+import demo_proyectofinal_fx.demoapp.exceptions.UsuarioException;
 import demo_proyectofinal_fx.demoapp.model.*;
 import demo_proyectofinal_fx.demoapp.utils.DataUtil;
 import javafx.collections.FXCollections;
@@ -14,21 +16,25 @@ public class ModelFactory {
     private static Gimnasio gimnasio;
     private final ObservableList<Usuario> listaUsuariosObservable;
 
-    public static ModelFactory getInstancia(){
-        if(modelFactory == null){
+    private ModelFactory() {
+        gimnasio = DataUtil.inicializarDatos();
+        listaUsuariosObservable = FXCollections.observableArrayList(gimnasio.getListaUsuarios());
+    }
+
+    public static ModelFactory getInstancia() {
+        if (modelFactory == null) {
             modelFactory = new ModelFactory();
         }
         return modelFactory;
     }
 
-    private ModelFactory(){
-        gimnasio = DataUtil.inicializarDatos();
-        listaUsuariosObservable = FXCollections.observableArrayList(gimnasio.getListaUsuarios());
-    }
-
     public ObservableList<Usuario> obtenerUsuariosObservable() {
         listaUsuariosObservable.setAll(gimnasio.getListaUsuarios());
         return listaUsuariosObservable;
+    }
+
+    public List<Entrenador> obtenerEntrenadores() {
+        return gimnasio.getListaEntrenadores();
     }
 
 
@@ -37,9 +43,14 @@ public class ModelFactory {
         return gimnasio.getListaUsuarios();
     }
 
-    public Usuario crearcrearUsuario(Usuario usuario) {
-        return gimnasio.crearUsuario(usuario);
+    public Usuario crearcrearUsuario(Usuario usuario) throws UsuarioException {
+        try {
+            return gimnasio.crearUsuario(usuario);
+        } catch (Exception e) {
+            throw new UsuarioException("Error al crear usuario: " + e.getMessage(), e);
+        }
     }
+
 
     public boolean borrarusuario(String Identificacion) {
         return gimnasio.borrarusuario(String.valueOf(Identificacion));
@@ -56,8 +67,12 @@ public class ModelFactory {
         return gimnasio.calcularCostomembresia(tipoMembresia, periodoSeleccionado, usuarioSeleccionado);
     }
 
-    public boolean asignarMembresia(Membresia membresia, String identificacion) {
-        return gimnasio.asignarMembresia(membresia, identificacion);
+    public boolean asignarMembresia(Membresia membresia, String identificacion) throws MembresiaException {
+        try {
+            return gimnasio.asignarMembresia(membresia, identificacion);
+        } catch (Exception e) {
+            throw new MembresiaException("Error al asignar membresía: " + e.getMessage(), e);
+        }
     }
 
     public boolean borrarMembresia(String identificacion) {
@@ -67,14 +82,17 @@ public class ModelFactory {
     public boolean editarMembresia(Membresia membresiaEditada, String identificacion) {
         return gimnasio.editarMembresia(membresiaEditada, identificacion);
     }
+
     //Clase Controller ----------------------------------
     public static boolean asignarClaseAUsuario(String identificacion, String clase,
                                                String horario, String entrenador) {
         return gimnasio.asignarClaseAUsuario(identificacion, clase, horario, entrenador);
     }
+
     public static List<Entrenador> obtenerEntrenadoresDisponibles() {
         return gimnasio.obtenerEntrenadoresDisponibles();
     }
+
     public static ArrayList<Entrenador> getListaEntrenadores() {
         return gimnasio.getListaEntrenadores();
     }
@@ -91,5 +109,92 @@ public class ModelFactory {
 
     public int obtenerCantidadUsuariosEnClase(Clase clase) {
         return gimnasio.obtenerCantidadUsuariosEnClase(clase);
+    }
+
+    public boolean eliminarEntrenadorFX(String id) {
+
+        Administrador admin = gimnasio.getAdministrador();
+
+        if (admin == null) {
+            System.out.println("❌ No existe administrador en el gimnasio.");
+            return false;
+        }
+
+        return admin.eliminarEntrenador(id);
+    }
+
+    public boolean asignarEntrenador(String idEntrenador, String nombreClase) {
+
+        Administrador admin = gimnasio.getAdministrador();
+
+        if (admin == null) {
+            System.out.println("❌ No existe administrador en el gimnasio.");
+            return false;
+        }
+
+        return admin.asignarEntrenador(idEntrenador, nombreClase);
+    }
+
+    public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
+        return gimnasio.registrarEntrenador(nombre, apellido, id, edad, telefono);
+    }
+
+    public boolean actualizarEntrenador(String idActual,
+                                        String nombre,
+                                        String apellido,
+                                        String nuevoId,
+                                        int edad,
+                                        String telefono) {
+        Entrenador e = gimnasio.obtenerEntrenador(idActual);
+        if (e != null) {
+            gimnasio.actualizarEntrenador(e, nombre, apellido, nuevoId, edad, telefono);
+            return true;
+        }
+        return false;
+    }
+
+    public Entrenador obtenerEntrenador(String id) {
+        return gimnasio.obtenerEntrenador(id);
+    }
+
+    public UsuarioSistema autenticarUsuario(String usuario, String password) {
+        if (gimnasio == null || gimnasio.getListaUsuariosSistema() == null) {
+            System.out.println("❌ Gimnasio o lista de usuarios del sistema es null");
+            return null;
+        }
+
+        for (UsuarioSistema user : gimnasio.getListaUsuariosSistema()) {
+            System.out.println("Comparando: " + user.getNombre() + " con " + usuario);
+            if (user.getNombre().equals(usuario) && user.getPassword().equals(password)) {
+                System.out.println("✅ Usuario autenticado: " + user.getClass().getSimpleName());
+                return user;
+            }
+        }
+        System.out.println("❌ Usuario no encontrado o credenciales incorrectas");
+        return null;
+    }
+
+    public Administrador getAdministrador() {
+        return gimnasio.getAdministrador();
+    }
+
+    public String generarReporte(String tipoReporte) {
+        return gimnasio.generarReporte(tipoReporte);
+    }
+
+    public String generarReporteAsistencia() {
+        return gimnasio.generarReporteAsistencia();
+    }
+
+    public String generarReporteIngresos() {
+        return gimnasio.generarReporteIngresos();
+    }
+
+    public String generarReporteClasesPopulares() {
+        return gimnasio.generarReporteClasesPopulares();
+    }
+
+    public String generarReporteUsuariosPorTipo() {
+        return gimnasio.generarReporteUsuariosPorTipo();
     }
 }

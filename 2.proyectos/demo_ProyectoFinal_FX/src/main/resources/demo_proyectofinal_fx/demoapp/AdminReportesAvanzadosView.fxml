@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="demo_proyectofinal_fx.demoapp.viewController.AdminReportesAvanzadosViewController"
+            prefHeight="500" prefWidth="800">
+
+    <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0">
+
+        <Label text="Reportes Avanzados" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Label text="Seleccionar Reporte:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="reporteComboBox" prefWidth="250"/>
+            <Button text="Generar Reporte" onAction="#generarReporte"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+        </HBox>
+
+        <TextArea fx:id="reporteTextArea" prefHeight="300" prefWidth="600"
+                  editable="false" wrapText="true"/>
+
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Volver al Panel" onAction="#handleBack"
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+            <Button text="Cerrar Sesión" onAction="#handleLogout"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

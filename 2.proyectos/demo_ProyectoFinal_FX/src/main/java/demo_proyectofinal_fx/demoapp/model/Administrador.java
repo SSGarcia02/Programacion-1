@@ -11,13 +11,10 @@ public class Administrador extends UsuarioSistema{
         this.gimnasio = gimnasio;
     }
 
-    public void registrarEntrenador() {
-
-        Entrenador nuevo = Entrenador.registrarEntrenador(); // <-- se encarga Entrenador
-
+    public Entrenador registrarEntrenador(String nombre, String apellido, String id, int edad, String telefono) {
+        Entrenador nuevo = Entrenador.registrarEntrenador(nombre, apellido, id, edad, telefono);
         gimnasio.getListaEntrenadores().add(nuevo);
-
-        System.out.println("\n✅ Entrenador agregado al gimnasio correctamente.");
+        return nuevo;
     }
 
     public void modificarEntrenador() {
@@ -30,32 +27,31 @@ public class Administrador extends UsuarioSistema{
             System.out.println("❌ No existe un entrenador con ese ID.");
         }
     }
-    public void eliminarEntrenador() {
-        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a eliminar: ");
+    public boolean eliminarEntrenador(String id) {
+
         Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
-        if(resultado != null) {
+
+        if (resultado != null) {
             gimnasio.getListaEntrenadores().remove(resultado);
-            System.out.println("✅ Entrenador eliminado correctamente.");
-        } else {
-            System.out.println("❌ No existe un entrenador con ese ID.");
-        }
-    }
-    public void asignarEntrenadorClases(){
-        String id = DataUtil.leerStringConsola("Ingrese la identificacion del entrenador a asignar: ");
-        Entrenador resultado = Entrenador.obtenerEntrenador(gimnasio, id);
-        if(resultado != null) {
-            String nombreClase = DataUtil.leerStringConsola("Ingrese el nombre de la clase: ");
-            Clase clase = gimnasio.obtenerClase(nombreClase);
-            if(clase != null){
-                clase.asignarEntrenador(resultado);
-                System.out.println("✅ Entrenador asignado correctamente.");}
-            else{
-                System.out.println("❌ la clase no fue encontrada");
-            }
-        } else {
-            System.out.println("❌ No existe un entrenador con ese ID.");
+            return true;
         }
 
+        return false;
+    }
+    public boolean asignarEntrenador(String idEntrenador, String nombreClase) {
+        Entrenador entrenador = Entrenador.obtenerEntrenador(gimnasio, idEntrenador);
+        if (entrenador == null) {
+            System.out.println("❌ Entrenador no encontrado.");
+            return false;
+        }
+        Clase clase = gimnasio.obtenerClase(nombreClase);
+        if (clase == null) {
+            System.out.println("❌ Clase no encontrada.");
+            return false;
+        }
+        clase.asignarEntrenador(entrenador);
+        entrenador.agregarClase(nombreClase);
+        return true;
     }
     public void controlarAcceso() {
         String idUsuario = DataUtil.leerStringConsola("Ingrese identificación del usuario: ");
