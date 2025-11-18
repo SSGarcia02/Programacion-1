@@ -3,7 +3,7 @@ package gimnasiouq.gimnasiouq.model;
 import java.time.LocalDate;
 
 public class MembresiaBasica extends Membresia {
-
+    private String descripcion;
     boolean accesoGeneral;
 
     public MembresiaBasica(String tipo, double costo, LocalDate fechaInicio, LocalDate fechaFin, boolean estado, boolean accesoGeneral) {
@@ -18,6 +18,14 @@ public class MembresiaBasica extends Membresia {
     public MembresiaBasica(double costo, LocalDate inicio, LocalDate fin) {
         super("Basica", costo, inicio, fin, true);
         this.accesoGeneral = true;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public boolean isAccesoGeneral() {

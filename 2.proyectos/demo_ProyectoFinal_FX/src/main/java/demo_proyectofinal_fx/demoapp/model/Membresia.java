@@ -3,7 +3,7 @@ package demo_proyectofinal_fx.demoapp.model;
 import java.time.LocalDate;
 
 public abstract class Membresia {
-    private String tipo;
+    private String tipoMembresia;
     private  double costo;
     private LocalDate fechaInicio;
     private LocalDate fechaFinal;
@@ -11,22 +11,29 @@ public abstract class Membresia {
     private PeriodoMembresia periodoMembresia;
 
     public Membresia(){}
-    public Membresia(String tipo, double costo, LocalDate fechaInicio,
+    public Membresia(String tipoMembresia, double costo, LocalDate fechaInicio,
                      LocalDate fechaFinal, boolean estado, PeriodoMembresia periodoMembresia) {
-        this.tipo = tipo;
+        this.tipoMembresia = tipoMembresia;
         this.costo = costo;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.estado = estado;
         this.periodoMembresia = periodoMembresia;
     }
-
-    public String getTipo() {
-        return tipo;
+    public Membresia(String tipoMembresia, double costo, LocalDate fechaInicio,
+                     LocalDate fechaFinal){
+        this.tipoMembresia = tipoMembresia;
+        this.costo = costo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public String getTipoMembresia() {
+        return tipoMembresia;
+    }
+
+    public void setTipoMembresia(String tipoMembresia) {
+        this.tipoMembresia = tipoMembresia;
     }
 
     public double getCosto() {
@@ -54,7 +61,10 @@ public abstract class Membresia {
     }
 
     public boolean isEstado() {
-        return estado;
+        LocalDate hoy = LocalDate.now();
+        return estado &&
+                !hoy.isBefore(fechaInicio) &&
+                !hoy.isAfter(fechaFinal);
     }
 
     public void setEstado(boolean estado) {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="526.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="demo_proyectofinal_fx.demoapp.viewController.RecepcionistaAsignarClaseViewController">
+   <children>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="526.0" prefWidth="862.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="52.0" layoutY="33.0" text="Clase:" />
+                  <Label layoutX="39.0" layoutY="90.0" text="Horario:" />
+                  <Label layoutX="448.0" layoutY="33.0" text="Entrenador:" />
+                  <Label layoutX="418.0" layoutY="90.0" text="Cupo Disponible:" />
+                  <ComboBox fx:id="comboBoxClase" layoutX="95.0" layoutY="29.0" prefHeight="26.0" prefWidth="254.0" />
+                  <ComboBox fx:id="comboBoxEntrenador" layoutX="517.0" layoutY="29.0" prefHeight="26.0" prefWidth="254.0" />
+                  <ComboBox fx:id="comboBoxHorario" layoutX="95.0" layoutY="85.0" prefHeight="26.0" prefWidth="254.0" />
+                  <TextField fx:id="txtCupoDisponible" layoutX="517.0" layoutY="86.0" prefHeight="26.0" prefWidth="254.0" />
+                  <Button fx:id="btnLimpiar" layoutX="126.0" layoutY="179.0" mnemonicParsing="false" onAction="#onLimpiar" prefHeight="39.0" prefWidth="106.0" text="Limpiar" />
+                  <Button fx:id="btnAsignar" layoutX="296.0" layoutY="179.0" mnemonicParsing="false" onAction="#onAsignar" prefHeight="39.0" prefWidth="106.0" text="Asignar" />
+                  <Button fx:id="btnActualizar" layoutX="472.0" layoutY="179.0" mnemonicParsing="false" onAction="#onActualizar" prefHeight="39.0" prefWidth="106.0" text="Actualizar" />
+                  <Button fx:id="btnBorrar" layoutX="634.0" layoutY="179.0" mnemonicParsing="false" onAction="#onBorrar" prefHeight="39.0" prefWidth="106.0" text="Borrar" />
+                  <Separator layoutY="144.0" prefHeight="0.0" prefWidth="861.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="tableUsuario" prefHeight="259.0" prefWidth="861.0">
+                    <columns>
+                      <TableColumn fx:id="tcNombre" prefWidth="119.2000076174736" text="Nombre" />
+                        <TableColumn fx:id="tcApellido" prefWidth="108.79999542236328" text="Apellido" />
+                        <TableColumn fx:id="tcIdentificacion" prefWidth="136.8000030517578" text="Identificacion" />
+                        <TableColumn fx:id="tcEstadoMembresia" prefWidth="119.20001220703125" text="Estado Membresia" />
+                        <TableColumn fx:id="tcClase" prefWidth="123.19992065429688" text="Clase" />
+                        <TableColumn fx:id="tcHorario" prefWidth="112.79998779296875" text="Horario" />
+                        <TableColumn fx:id="tcEntrenador" prefWidth="146.40008544921875" text="Entrenador" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -18,6 +18,21 @@ public class Clase {
         this.cupoMaximo = cupoMaximo;
     }
 
+    public Clase() {
+
+    }
+
+    public Clase(String nombreClase,
+                 TipoClases tipoClase,
+                 LocalTime horaInicio,
+                 int cupoMaximo, Entrenador entrenador) {
+        this.nombre = nombreClase;
+        this.tipoClase = tipoClase;
+        this.horaInicio = horaInicio;
+        this.cupoMaximo = cupoMaximo;
+        this.entrenadorAsignado = entrenador;
+    }
+
     public String getNombre() {
         return nombre;
     }

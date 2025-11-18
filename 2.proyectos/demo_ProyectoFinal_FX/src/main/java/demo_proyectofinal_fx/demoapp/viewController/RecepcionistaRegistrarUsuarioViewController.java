@@ -4,6 +4,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import demo_proyectofinal_fx.demoapp.factory.ModelFactory;
+import demo_proyectofinal_fx.demoapp.model.Externo;
+import demo_proyectofinal_fx.demoapp.model.TrabajadorUQ;
+import javafx.scene.control.ComboBox;
 import demo_proyectofinal_fx.demoapp.controller.UsuarioController;
 import demo_proyectofinal_fx.demoapp.model.Estudiante;
 import demo_proyectofinal_fx.demoapp.model.Usuario;
@@ -30,9 +34,6 @@ public class RecepcionistaRegistrarUsuarioViewController {
     private URL location;
 
     @FXML
-    private ChoiceBox<?> ChoiseBoxMembresia;
-
-    @FXML
     private Button btnActualizarUsuario;
 
     @FXML
@@ -43,6 +44,9 @@ public class RecepcionistaRegistrarUsuarioViewController {
 
     @FXML
     private Button btnLimpiarUsuario;
+
+    @FXML
+    private ComboBox<String> comboBoxTipoUsuario;
 
     @FXML
     private TableView<Usuario> tableUsuario;
@@ -57,7 +61,7 @@ public class RecepcionistaRegistrarUsuarioViewController {
     private TableColumn<Usuario, String> tcIdentificacion;
 
     @FXML
-    private TableColumn<?, ?> tcMembresia;
+    private TableColumn<Usuario, String> tcMembresia;
 
     @FXML
     private TableColumn<Usuario, String> tcNombre;
@@ -66,7 +70,7 @@ public class RecepcionistaRegistrarUsuarioViewController {
     private TableColumn<Usuario, String> tcTelefono;
 
     @FXML
-    private TableColumn<?, ?> tcTipoDeUsuario;
+    private TableColumn<Usuario, String> tcTipoDeUsuario;
 
     @FXML
     private TextField txtApellido;
@@ -107,15 +111,38 @@ public class RecepcionistaRegistrarUsuarioViewController {
     void initialize() {
        usuarioController = new UsuarioController();
        initView();
+        if(comboBoxTipoUsuario != null){
+            comboBoxTipoUsuario.getItems().addAll("Estudiante", "Trabajador UQ", "Externo");
+        }
+    }
+    private void initView() {
+        initDataBinding();
+        obtenerUsuario();
+        listaUsuarios = ModelFactory.getInstancia().obtenerUsuariosObservable();
+        tableUsuario.setItems(listaUsuarios);
+        listenerSeleccion();
+    }
+
+    private void initDataBinding() {
+        tcNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tcApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+        tcIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
+        tcEdad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getEdad())));
+        tcTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
+        tcTipoDeUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipo()));
+    }
+
+    private void obtenerUsuario() {
+        listaUsuarios.addAll(usuarioController.obtenerUsuarios());
     }
 
     private void crearUsuario() {
-        //1. Captura los datos del formulario
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String identificacion = txtIdentificacion.getText();
         String edad = txtEdad.getText();
         String telefono = txtTelefono.getText();
+        String tipoUsuario = comboBoxTipoUsuario.getValue();
 
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(nombre);
@@ -123,12 +150,9 @@ public class RecepcionistaRegistrarUsuarioViewController {
         nuevoUsuario.setIdentificacion(identificacion);
         nuevoUsuario.setEdad(Integer.parseInt(edad));
         nuevoUsuario.setTelefono(telefono);
+        nuevoUsuario.setTipo(tipoUsuario);
 
-
-        //2. Validar datos
         boolean datosValidos = validarCampos(nombre, apellido, identificacion, edad, telefono);
-
-        //3. Realizar la solictud de crear el estudiante
 
         if(datosValidos){
             Usuario usuario = usuarioController.crearUsuario(nuevoUsuario);
@@ -142,6 +166,7 @@ public class RecepcionistaRegistrarUsuarioViewController {
             JOptionPane.showMessageDialog(null,"Datos no Validos");
         }
     }
+
     private void borrarusuario() {
         if(usuarioSeleccionado != null){
             boolean resultado = usuarioController.borrarusuario(usuarioSeleccionado.getIdentificacion());
@@ -157,24 +182,33 @@ public class RecepcionistaRegistrarUsuarioViewController {
         }
     }
     private void actualizarUsuario() {
-        if(usuarioSeleccionado != null){
-            Usuario usuarioEditar = new Usuario();
-            usuarioEditar.setNombre(usuarioSeleccionado.getNombre());
-            usuarioEditar.setApellido(usuarioSeleccionado.getApellido());
-            usuarioEditar.setIdentificacion(usuarioSeleccionado.getIdentificacion());
-            usuarioEditar.setEdad(usuarioSeleccionado.getEdad());
-            usuarioEditar.setTelefono(usuarioSeleccionado.getTelefono());
+        if (usuarioSeleccionado != null) {
+            try {
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                String identificacion = txtIdentificacion.getText();
+                int edad = Integer.parseInt(txtEdad.getText());
+                String telefono = txtTelefono.getText();
+                String tipoSeleccionado = comboBoxTipoUsuario.getValue();
 
-            boolean resultado = usuarioController.actualizarUsuario(usuarioEditar, usuarioSeleccionado.getIdentificacion());
-            if(resultado){
-                mostrarMensaje("Notificacion", "Editar Usuario", "Usuario editado Exitosamente",Alert.AlertType.CONFIRMATION);
-            }else{
-                mostrarMensaje("Notificacion", "Editar Usuario", "No es posible editar Usuario",Alert.AlertType.WARNING);
+                usuarioSeleccionado.setNombre(nombre);
+                usuarioSeleccionado.setApellido(apellido);
+                usuarioSeleccionado.setIdentificacion(identificacion);
+                usuarioSeleccionado.setEdad(edad);
+                usuarioSeleccionado.setTelefono(telefono);
+                usuarioSeleccionado.setTipo(tipoSeleccionado);
 
+                boolean resultado = usuarioController.actualizarUsuario(
+                        usuarioSeleccionado,
+                        usuarioSeleccionado.getIdentificacion()
+                );
+                if (resultado) {
+                    mostrarMensaje("Éxito", "Actualizar Usuario","Usuario actualizado existosamente", Alert.AlertType.CONFIRMATION);
+                    tableUsuario.refresh();
+                }
+            } catch (NumberFormatException e) {
+                mostrarMensaje("Error", "Actualizar Usuario","La edad debe ser un número válido", Alert.AlertType.ERROR);
             }
-        }else{
-            mostrarMensaje("Notificacion", "Editar Usuario", "Debe seleccionario a un usuario",Alert.AlertType.WARNING);
-
         }
     }
 
@@ -184,7 +218,7 @@ public class RecepcionistaRegistrarUsuarioViewController {
         txtIdentificacion.setText("");
         txtEdad.setText("");
         txtTelefono.setText("");
-
+        comboBoxTipoUsuario.setValue(null);
     }
     private boolean validarCampos(String nombre, String apellido,
                                   String identificacion, String edad, String telefono) {
@@ -196,43 +230,32 @@ public class RecepcionistaRegistrarUsuarioViewController {
         }
     }
 
-    private void initView() {
-        initDataBinding();
-        obtenerUsuario();
-        tableUsuario.getItems().clear();
-        tableUsuario.setItems(listaUsuarios);
-        listenerSeleccion();
-    }
-
-    private void obtenerUsuario() {
-        listaUsuarios.addAll(usuarioController.obtenerUsuarios());
-    }
-
-    private void initDataBinding() {
-        tcNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        tcApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
-        tcIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
-        tcEdad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getEdad())));
-        tcTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
-
-
-    }
-
     private void listenerSeleccion() {
         tableUsuario.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSelection) -> {
             usuarioSeleccionado = newSelection;
             mostrarInformacion(usuarioSeleccionado);
         });
     }
-    private void mostrarInformacion(Usuario estudianteSeleccionado) {
-        if(estudianteSeleccionado != null){
-            txtNombre.setText(estudianteSeleccionado.getNombre());
-            txtApellido.setText(estudianteSeleccionado.getApellido());
-            txtIdentificacion.setText(estudianteSeleccionado.getIdentificacion());
-            txtEdad.setText(String.valueOf(estudianteSeleccionado.getEdad()));
-            txtTelefono.setText(estudianteSeleccionado.getTelefono());
+    private void mostrarInformacion(Usuario usuarioSeleccionado) {
+        if(usuarioSeleccionado != null){
+            txtNombre.setText(usuarioSeleccionado.getNombre());
+            txtApellido.setText(usuarioSeleccionado.getApellido());
+            txtIdentificacion.setText(usuarioSeleccionado.getIdentificacion());
+            txtEdad.setText(String.valueOf(usuarioSeleccionado.getEdad()));
+            txtTelefono.setText(usuarioSeleccionado.getTelefono());
+
+            String tipoUsuario = "Desconocido";
+            if (usuarioSeleccionado instanceof Estudiante) {
+                tipoUsuario = "Estudiante";
+            } else if (usuarioSeleccionado instanceof TrabajadorUQ) {
+                tipoUsuario = "Trabajador UQ";
+            } else if (usuarioSeleccionado instanceof Externo) {
+                tipoUsuario = "Externo";
+            }
+            comboBoxTipoUsuario.setValue(tipoUsuario);
         }
     }
+
     private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
         Alert aler = new Alert(alertType);
         aler.setTitle(titulo);
@@ -253,4 +276,6 @@ public class RecepcionistaRegistrarUsuarioViewController {
             return false;
         }
     }
+
+
 }

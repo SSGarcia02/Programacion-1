@@ -3,11 +3,18 @@ package gimnasiouq.gimnasiouq.model;
 import java.time.LocalDate;
 
 public class MembresiaVIP extends Membresia {
-
+    private String descripcion;
     public MembresiaVIP(double costo, LocalDate inicio, LocalDate fin) {
         super("VIP", costo, inicio, fin, true);
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     public boolean accesoGeneral() { 
         return true; 
     }

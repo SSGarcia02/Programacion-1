@@ -8,9 +8,13 @@ public class Entrenador extends Persona{
     private ArrayList<Clase> listClases = new ArrayList<>();
     private Membresia membresia;
     private ArrayList<Clase> listaClases = new ArrayList<>();
+
     public Entrenador(String nombre,String apellido, String identificacion, int edad, String telefono) {
         super(nombre, apellido, identificacion, edad, telefono);
     }
+    public Entrenador(){}
+
+
     public ArrayList<Clase> getListaClases() {
         return listaClases;
     }
@@ -32,6 +36,7 @@ public class Entrenador extends Persona{
         }
         return buscarId;
     }
+
     public static void modificarEntrenador(Entrenador entrenador){
         String nombre = DataUtil.leerStringConsola("Ingrese el nombre del Entrenador: ");
         String apellido = DataUtil.leerStringConsola("Ingrese el apellido del Entrenador: ");

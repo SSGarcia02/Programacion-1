@@ -1,10 +1,7 @@
 package demo_proyectofinal_fx.demoapp.utils;
 
 
-import demo_proyectofinal_fx.demoapp.model.Estudiante;
-import demo_proyectofinal_fx.demoapp.model.Externo;
-import demo_proyectofinal_fx.demoapp.model.Gimnasio;
-import demo_proyectofinal_fx.demoapp.model.TrabajadorUQ;
+import demo_proyectofinal_fx.demoapp.model.*;
 
 import java.util.Scanner;
 
@@ -53,6 +50,8 @@ public class DataUtil {
         estudiante3.setTelefono("3004751613");
         estudiante3.setIdentificacion("1003");
 
+
+
         TrabajadorUQ trabajadorUQ1 = new TrabajadorUQ();
         trabajadorUQ1.setNombre("Franco");
         trabajadorUQ1.setApellido("Armani");
@@ -67,11 +66,23 @@ public class DataUtil {
         externo1.setTelefono("31600000000");
         externo1.setIdentificacion("1005");
 
+        Entrenador entrenador1 = new Entrenador();
+        entrenador1.setNombre("Sofiane");
+        entrenador1.setApellido("Feghouli");
+        entrenador1.setIdentificacion("1010");
+
+        Entrenador entrenador2 = new Entrenador();
+        entrenador2.setNombre("Sofyan");
+        entrenador2.setApellido("Anrabat");
+        entrenador2.setIdentificacion("1011");
+
         gimnasio.getListaUsuarios().add(estudiante1);
         gimnasio.getListaUsuarios().add(estudiante2);
         gimnasio.getListaUsuarios().add(estudiante3);
         gimnasio.getListaUsuarios().add(trabajadorUQ1);
         gimnasio.getListaUsuarios().add(externo1);
+        gimnasio.getListaEntrenadores().add(entrenador1);
+        gimnasio.getListaEntrenadores().add(entrenador2);
 
         return gimnasio;
     }

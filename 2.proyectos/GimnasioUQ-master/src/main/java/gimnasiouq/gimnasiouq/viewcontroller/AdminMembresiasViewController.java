@@ -38,6 +38,10 @@ public class AdminMembresiasViewController {
     @FXML
     private TableView<Usuario> tableUsuario;
 
+
+    @FXML
+    private TableColumn<Usuario, String> tcUsuario;
+
     @FXML
     private TableColumn<Usuario, String> tcFechaFin;
 
@@ -50,7 +54,6 @@ public class AdminMembresiasViewController {
     @FXML
     private TableColumn<Usuario, String> tcNombre;
 
-    // ⭐ NUEVAS COLUMNAS
     @FXML
     private TableColumn<Usuario, String> tcPlanMembresia;
 
@@ -91,6 +94,7 @@ public class AdminMembresiasViewController {
 
     @FXML
     void initialize() {
+        membresiaController = new MembresiaController();
         initView();
         comboBoxPlanMembresia.getItems().addAll("Mensual", "Trimestral", "Anual");
         comboBoxPlanMembresia.setOnAction(e -> calcularFechas());
@@ -109,36 +113,53 @@ public class AdminMembresiasViewController {
     }
 
     private void initDataBinding() {
-        tcNombre.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getNombre()));
-        tcIdentificacion.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getIdentificacion()));
-
-        tcFechaInicio.setCellValueFactory(cellData -> {
-            Usuario usuario = cellData.getValue();
-            return new SimpleStringProperty(usuario.getFechaInicioFormateada());
-        });
-
-        tcFechaFin.setCellValueFactory(cellData -> {
-            Usuario usuario = cellData.getValue();
-            return new SimpleStringProperty(usuario.getFechaFinFormateada());
-        });
+        if (tcNombre != null) {
+            tcNombre.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getNombre()));
+        }
+        if (tcIdentificacion != null) {
+            tcIdentificacion.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getIdentificacion()));
+        }
+        if (tcFechaInicio != null) {
+            tcFechaInicio.setCellValueFactory(cellData -> {
+                Usuario usuario = cellData.getValue();
+                return new SimpleStringProperty(usuario.getFechaInicioFormateada());
+            });
+        }
+        if (tcFechaFin != null) {
+            tcFechaFin.setCellValueFactory(cellData -> {
+                Usuario usuario = cellData.getValue();
+                return new SimpleStringProperty(usuario.getFechaFinFormateada());
+            });
+        }
         if (tcPlanMembresia != null) {
             tcPlanMembresia.setCellValueFactory(cellData -> {
                 Usuario usuario = cellData.getValue();
                 return new SimpleStringProperty(usuario.getPlanMembresia());
             });
         }
-
         if (tcCosto != null) {
             tcCosto.setCellValueFactory(cellData -> {
                 Usuario usuario = cellData.getValue();
                 return new SimpleStringProperty(usuario.getCostoMembresiaFormateado());
             });
         }
-
-        tcEstado.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getEstadoMembresia()));
+        if (tcEstado != null) {
+            tcEstado.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getEstadoMembresia()));
+        }
+        if (tcUsuario != null) {
+            tcUsuario.setCellValueFactory(cellData -> {
+                if (cellData.getValue() instanceof Estudiante) {
+                    return new SimpleStringProperty("Estudiante");
+                } else if (cellData.getValue() instanceof TrabajadorUQ) {
+                    return new SimpleStringProperty("Trabajador UQ");
+                } else {
+                    return new SimpleStringProperty("Externo");
+                }
+            });
+        }
     }
 
     private void listenerSelection() {
@@ -174,10 +195,6 @@ public class AdminMembresiasViewController {
             }
 
             Membresia membresia = crearMembresia();
-
-            if (membresiaController == null) {
-                membresiaController = new MembresiaController();
-            }
 
             if (!membresiaController.asignarMembresiaUsuario(usuarioSeleccionado.getIdentificacion(), membresia)) {
                 mostrarVentanaEmergente("Error al asignar", "Error",
@@ -224,10 +241,6 @@ public class AdminMembresiasViewController {
 
         confirmacion.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                if (membresiaController == null) {
-                    membresiaController = new MembresiaController();
-                }
-
                 if (membresiaController.eliminarMembresiaUsuario(usuarioSeleccionado)) {
                     tableUsuario.refresh();
                     limpiarCampos();
@@ -249,9 +262,10 @@ public class AdminMembresiasViewController {
 
     private void calcularFechas() {
         String plan = comboBoxPlanMembresia.getValue();
-        if (plan == null || plan.isEmpty()) return;
+        if (plan == null || plan.isEmpty() || usuarioSeleccionado == null) return;
 
-        Membresia membresiaCalculada = ModelFactory.getInstance().calcularMembresiaPorPlan(plan);
+        String tipoMembresia = usuarioSeleccionado.getTipoMembresia();
+        Membresia membresiaCalculada = membresiaController.calcularMembresiaPorPlan(plan, tipoMembresia, usuarioSeleccionado);
 
         if (membresiaCalculada != null) {
             txtFechaInicio.setText(membresiaCalculada.getInicio().format(formatoFecha));
@@ -261,33 +275,11 @@ public class AdminMembresiasViewController {
     }
 
     private Membresia crearMembresia() {
-        String tipo = comboBoxPlanMembresia.getValue();
-        LocalDate inicio = null;
-        LocalDate fin = null;
-        double costo = 0;
-        try {
-            if (txtFechaInicio.getText() != null && !txtFechaInicio.getText().isEmpty()) {
-                inicio = LocalDate.parse(txtFechaInicio.getText(), formatoFecha);
-            }
-            if (txtFechaFin.getText() != null && !txtFechaFin.getText().isEmpty()) {
-                fin = LocalDate.parse(txtFechaFin.getText(), formatoFecha);
-            }
-            if (txtCosto.getText() != null && !txtCosto.getText().isEmpty()) {
-                costo = Double.parseDouble(txtCosto.getText());
-            }
-        } catch (Exception ignored) {
-        }
+        String plan = comboBoxPlanMembresia.getValue();
+        String tipoMembresia = usuarioSeleccionado != null ? usuarioSeleccionado.getTipoMembresia() : null;
 
-        if (tipo != null) {
-            tipo = tipo.trim().toLowerCase();
-            return switch (tipo) {
-                case "mensual" -> new MembresiaBasica(costo, inicio, fin);
-                case "trimestral" -> new MembresiaPremium(costo, inicio, fin);
-                case "anual" -> new MembresiaVIP(costo, inicio, fin);
-                default -> new MembresiaBasica(costo, inicio, fin);
-            };
-        }
-        return new MembresiaBasica(costo, inicio, fin);
+        // Delegar siempre a la lógica de negocio para asegurar que los descuentos se apliquen
+        return membresiaController.calcularMembresiaPorPlan(plan, tipoMembresia, usuarioSeleccionado);
     }
 
     private void mostrarInformacionUsuario(Usuario usuario) {
