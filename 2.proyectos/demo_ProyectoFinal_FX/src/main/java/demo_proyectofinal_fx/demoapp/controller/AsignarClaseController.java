@@ -36,4 +36,14 @@ public class AsignarClaseController {
     public boolean borrarClaseDeUsuario(String usuarioSeleccionado) {
         return modelFactory.borrarClaseDeUsuario(usuarioSeleccionado);
     }
+
+    public boolean editarClaseDeUsuario(String usuarioSeleccionado,
+                                        String clase, String horario, String entrenador) {
+        return modelFactory.editarClaseDeUsuario(usuarioSeleccionado, clase, horario, entrenador);
+    }
+
+
+    public int obtenerCantidadUsuariosEnClase(Clase clase) {
+        return modelFactory.obtenerCantidadUsuariosEnClase(clase);
+    }
 }

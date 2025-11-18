@@ -82,4 +82,14 @@ public class ModelFactory {
     public boolean borrarClaseDeUsuario(String usuarioSeleccionado) {
         return gimnasio.borrarClaseDeUsuario(usuarioSeleccionado);
     }
+
+    public boolean editarClaseDeUsuario(String usuarioSeleccionado, String clase,
+                                        String horario, String entrenador) {
+        return gimnasio.editarClaseDeUsuario(usuarioSeleccionado, clase, horario, entrenador);
+    }
+
+
+    public int obtenerCantidadUsuariosEnClase(Clase clase) {
+        return gimnasio.obtenerCantidadUsuariosEnClase(clase);
+    }
 }

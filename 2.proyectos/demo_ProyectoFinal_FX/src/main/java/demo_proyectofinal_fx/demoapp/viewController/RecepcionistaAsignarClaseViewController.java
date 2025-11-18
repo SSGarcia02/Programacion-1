@@ -83,7 +83,7 @@ public class RecepcionistaAsignarClaseViewController {
 
     @FXML
     void onActualizar(ActionEvent event) {
-
+        editarClaseDeUsuario();
     }
 
     @FXML
@@ -256,6 +256,37 @@ public class RecepcionistaAsignarClaseViewController {
             }
         }
     }
+
+    private void editarClaseDeUsuario() {
+        if (usuarioSeleccionado == null || usuarioSeleccionado.getClase() == null) {
+            mostrarMensaje("Error", "Seleccione un usuario con clase asignada", "", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (comboBoxClase.getValue() == null || comboBoxHorario.getValue() == null || comboBoxEntrenador.getValue() == null) {
+            mostrarMensaje("Error", "Complete todos los campos", "", Alert.AlertType.WARNING);
+            return;
+        }
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setContentText("¿Cambiar clase del usuario?");
+
+        if (confirmacion.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            boolean exito = asignarClaseController.editarClaseDeUsuario(
+                    usuarioSeleccionado.getIdentificacion(),
+                    comboBoxClase.getValue(),
+                    comboBoxHorario.getValue(),
+                    comboBoxEntrenador.getValue()
+            );
+
+            if (exito) {
+                mostrarMensaje("Éxito", "Clase actualizada", "", Alert.AlertType.INFORMATION);
+                tableUsuario.refresh();
+            } else {
+                mostrarMensaje("Error", "No se pudo actualizar la clase", "Verifique membresía y cupo", Alert.AlertType.ERROR);
+            }
+        }
+    }
     private void cargarEntrenadores() {
         comboBoxEntrenador.getItems().clear();
 
@@ -312,7 +343,17 @@ public class RecepcionistaAsignarClaseViewController {
             } else {
                 limpiarCampos();
             }
+            int cupoMaximo = usuarioSeleccionado.getClase().getCupoMaximo();
+            int usuariosInscritos = asignarClaseController.obtenerCantidadUsuariosEnClase(usuarioSeleccionado.getClase());
+            int cupoDisponible = cupoMaximo - usuariosInscritos;
+
+            txtCupoDisponible.setText(cupoDisponible + " / " + cupoMaximo);
+
+        } else {
+            limpiarCampos();
+            txtCupoDisponible.setText(""); // Limpiar cupo si no tiene clase
         }
+
     }
 
     private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {

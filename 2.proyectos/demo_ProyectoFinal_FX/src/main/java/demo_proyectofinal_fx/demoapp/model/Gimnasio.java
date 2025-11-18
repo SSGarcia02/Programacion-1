@@ -375,6 +375,34 @@ public class Gimnasio {
         return LocalTime.parse(partes[0], DateTimeFormatter.ofPattern("H:mm"));
     }
 
+    public boolean editarClaseDeUsuario(String identificacion, String tipoClase, String horario, String entrenador) {
+        try {
+            Usuario usuario = obtenerUsuario(identificacion);
+            if (usuario == null || usuario.getMembresia() == null || !usuario.getMembresia().isEstado()) {
+                return false;
+            }
+
+            if (usuario.getClase() == null) return false;
+
+            TipoClases nuevoTipo = TipoClases.valueOf(tipoClase.toUpperCase());
+            LocalTime nuevaHora = parsearHorario(horario);
+            Entrenador nuevoEntrenador = obtenerEntrenadorPorNombre(entrenador);
+
+            if (nuevoEntrenador == null) return false;
+
+            Clase nuevaClase = obtenerOcrearClase(nuevoTipo, nuevaHora, nuevoEntrenador);
+
+            if (obtenerCantidadUsuariosEnClase(nuevaClase) >= nuevaClase.getCupoMaximo()) {
+                return false;
+            }
+
+            usuario.setClase(nuevaClase);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public Entrenador obtenerEntrenadorPorNombre(String nombre) {
         for (Entrenador entrenador : getListaEntrenadores()) {
             if (entrenador.getNombre().equals(nombre)) {
